@@ -1178,6 +1178,7 @@ public:
 
 				// Refresh bindings in case device's interfaces have changed, and also sync routes to update any shadow routes (e.g. shadow default)
 				if (((now - lastBindRefresh) >= (_node->bondController()->inUse() ? ZT_BINDER_REFRESH_PERIOD / 4 : ZT_BINDER_REFRESH_PERIOD))||restarted) {
+					fprintf(stderr, "binder refresh\n");
 
 					// If secondary port is not configured to a constant value and we've been offline for a while,
 					// bind a new secondary port. This is a workaround for a "coma" issue caused by buggy NATs that stop
@@ -1189,6 +1190,9 @@ public:
 						else if (now - lastOnline > (ZT_PEER_PING_PERIOD * 2) || restarted) {
 							lastOnline = now;	// don't keep changing the port before we have a chance to connect
 							_ports[1] = _getRandomPort();
+
+							// TODO delete
+							fprintf(stderr, "randomized secondary port. Now it's %d\n", _ports[1]);
 						}
 					}
 

@@ -536,8 +536,10 @@ unsigned int Peer::doPingAndKeepalive(void *tPtr,int64_t now)
 
 		performMultipathStateCheck(tPtr, now);
 
+		char buf[64];
 		const bool sendFullHello = ((now - _lastSentFullHello) >= ZT_PEER_PING_PERIOD);
 		if (sendFullHello) {
+			fprintf(stderr, "sendFullHello %s \n", _id.address().toString(buf));
 			_lastSentFullHello = now;
 		}
 
